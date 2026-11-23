@@ -1,0 +1,4 @@
+kagglehub==1.0.3
+tensorflow==2.21.0
+numpy==2.5.5
+matplotlib==3.11.2
