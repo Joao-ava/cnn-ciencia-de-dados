@@ -84,6 +84,9 @@ As constantes compartilhadas (seed, tamanho da imagem, caminhos) ficam em `src/c
 
 ## Pré-processamento (`src/preprocessing.py`)
 
+> O notebook [`notebooks/01_preprocessamento.ipynb`](notebooks/01_preprocessamento.ipynb) mostra todas as
+> etapas com gráficos e exemplos (distribuição das classes, duplicatas, normalização, augmentation e pesos).
+
 Há duas formas de aplicar augmentation e normalização. **Escolha uma, nunca as duas juntas**:
 
 **A) No `tf.data.Dataset` (recomendada).** O pré-processamento roda na CPU, em paralelo com o treino.
@@ -129,6 +132,35 @@ model.fit(train_ds, validation_data=val_ds, class_weight=class_weight)
   porque a cor é o que separa saudável de podre.
 - `compute_class_weights` lê só o `splits.csv`. Os pesos vão de 0,36 (classes grandes) a 5,23 (pequenas).
 - `python -m src.preprocessing` mostra os pesos e salva `augmentation_preview.png` para conferir a augmentation.
+
+## Duplicatas entre splits (`src/duplicates.py`)
+
+O dataset tem muitas imagens repetidas ou quase iguais (o mesmo objeto fotografado em sequência).
+Se uma cópia fica no treino e outra no teste, o modelo "já viu" a resposta e as métricas ficam infladas.
+
+```bash
+python -m src.duplicates          # só relatório, não muda nada
+python -m src.duplicates --fix    # corrige data/splits.csv
+```
+
+- **Exatas**: mesmo MD5 (arquivo idêntico).
+- **Quase iguais**: hash perceptual (dHash) com até 4 bits diferentes **e** diferença de cor ≤ 6 numa
+  miniatura 16×16. Só o hash não basta: ele junta frutas diferentes fotografadas no mesmo fundo.
+  Os cortes foram escolhidos olhando pares deste dataset (`--threshold` e `--max-color-diff` para ajustar).
+- **Correção**: cada grupo de duplicatas fica inteiro num só split (prioridade treino > val > teste).
+  O resto da divisão não muda.
+- **Saídas**: `data/duplicates.csv` (grupos), `data/duplicates_entre_classes.csv` (mesma imagem com
+  rótulos diferentes, só aviso), `duplicates_preview.png` (exemplos para conferir) e
+  `duplicates_entre_classes.png` (os pares com rótulos diferentes lado a lado).
+- **Prévia de uma classe**: `python -m src.duplicates --preview-class Mango__Healthy --preview-groups 10`
+  gera `duplicates_preview_Mango__Healthy.png`.
+- **Limitação**: frutas pequenas num fundo grande e liso (algumas mangas) às vezes são agrupadas mesmo
+  sendo frutas diferentes. O efeito é só mover algumas imagens a mais para o treino; nunca deixa vazamento.
+- Leva ~15 s (16 núcleos); os hashes ficam em `data/cache/image_hashes.npz`.
+
+Resultado neste dataset: 3.358 grupos (7.642 imagens), 1.648 deles espalhados em mais de um split;
+o `--fix` move 1.868 imagens (val/teste → treino). Há também 10 pares de cenouras com a mesma imagem
+em `Carrot__Healthy` e `Carrot__Rotten` (erro de rótulo do dataset; não alterados).
 
 ### Problemas comuns
 

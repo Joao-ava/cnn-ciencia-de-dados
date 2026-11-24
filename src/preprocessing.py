@@ -198,10 +198,7 @@ def save_augmentation_preview(dataset, path="augmentation_preview.png", n_images
 
     Serve para conferir que as transformações não estão fortes demais.
     """
-    import matplotlib
-
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plt  # só salva arquivo; não troca o backend (quebraria o notebook)
 
     augmentation = build_augmentation()
     images, _ = next(iter(dataset))
