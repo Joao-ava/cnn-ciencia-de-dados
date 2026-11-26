@@ -1,11 +1,1 @@
 kind,path_a,class_a,split_a,path_b,class_b,split_b
-exata,Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (31).jpg,Carrot__Rotten,train,Fruit And Vegetable Diseases Dataset/Carrot__Healthy/freshCarrot (534).jpg,Carrot__Healthy,train
-exata,Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (527).jpg,Carrot__Rotten,train,Fruit And Vegetable Diseases Dataset/Carrot__Healthy/freshCarrot (536).jpg,Carrot__Healthy,train
-quase,Fruit And Vegetable Diseases Dataset/Bellpepper__Rotten/rottenPepper (488).jpg,Bellpepper__Rotten,train,Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (65).jpg,Carrot__Rotten,train
-quase,Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (100).jpg,Carrot__Rotten,train,Fruit And Vegetable Diseases Dataset/Carrot__Healthy/freshCarrot (432).jpg,Carrot__Healthy,val
-quase,Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (100).jpg,Carrot__Rotten,train,Fruit And Vegetable Diseases Dataset/Carrot__Healthy/freshCarrot (534).jpg,Carrot__Healthy,train
-quase,Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (251).jpg,Carrot__Rotten,train,Fruit And Vegetable Diseases Dataset/Carrot__Healthy/freshCarrot (432).jpg,Carrot__Healthy,val
-quase,Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (251).jpg,Carrot__Rotten,train,Fruit And Vegetable Diseases Dataset/Carrot__Healthy/freshCarrot (534).jpg,Carrot__Healthy,train
-quase,Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (31).jpg,Carrot__Rotten,train,Fruit And Vegetable Diseases Dataset/Carrot__Healthy/freshCarrot (432).jpg,Carrot__Healthy,val
-quase,Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (549).jpg,Carrot__Rotten,val,Fruit And Vegetable Diseases Dataset/Carrot__Healthy/freshCarrot (432).jpg,Carrot__Healthy,val
-exata,Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (549).jpg,Carrot__Rotten,val,Fruit And Vegetable Diseases Dataset/Carrot__Healthy/freshCarrot (534).jpg,Carrot__Healthy,train

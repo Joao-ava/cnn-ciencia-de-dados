@@ -69,16 +69,29 @@ def stratified_split(labels: np.ndarray, val_size: float, test_size: float, seed
 # Splits fixos (data/splits.csv)
 # ---------------------------------------------------------------------------
 
+def read_excluded(excluded_path: Path | None = None) -> set[str]:
+    """Caminhos (relativos à raiz do dataset) listados em data/excluidas.csv."""
+    excluded_path = Path(excluded_path or config.EXCLUDED_PATH)
+    if not excluded_path.exists():
+        return set()
+    with open(excluded_path, newline="", encoding="utf-8") as f:
+        return {r["path"] for r in csv.DictReader(f)}
+
+
 def create_splits(data_dir: Path, splits_path: Path | None = None) -> list[dict]:
     """Gera a divisão treino/val/teste e salva em CSV.
 
     Os caminhos ficam relativos à raiz do dataset, então o mesmo CSV funciona
     em qualquer máquina (inclusive Colab). A estratificação usa a classe
     completa (ex.: 'Apple__Healthy'), então o modo binário também fica estratificado.
+    Imagens listadas em data/excluidas.csv ficam de fora.
     """
     data_dir = Path(data_dir)
     splits_path = Path(splits_path or config.SPLITS_PATH)
     paths, labels = find_image_files(data_dir)
+    excluded = read_excluded()
+    keep = [i for i, p in enumerate(paths) if Path(p).relative_to(data_dir).as_posix() not in excluded]
+    paths, labels = [paths[i] for i in keep], [labels[i] for i in keep]
     tr, va, te = stratified_split(np.array(labels), config.VAL_SIZE, config.TEST_SIZE, config.SEED)
 
     split_of = {}
@@ -104,8 +117,10 @@ def create_splits(data_dir: Path, splits_path: Path | None = None) -> list[dict]
 
 
 def read_splits(splits_path: Path | None = None) -> list[dict]:
+    """Lê data/splits.csv, já sem as imagens de data/excluidas.csv."""
+    excluded = read_excluded()
     with open(splits_path or config.SPLITS_PATH, newline="", encoding="utf-8") as f:
-        return list(csv.DictReader(f))
+        return [r for r in csv.DictReader(f) if r["path"] not in excluded]
 
 
 def get_splits(data_dir: Path, regenerate: bool = False) -> list[dict]:

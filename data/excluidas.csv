@@ -1,0 +1,8 @@
+path,motivo
+Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (31).jpg,cenoura saudável rotulada como podre (cópia exata de freshCarrot (534))
+Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (100).jpg,cenoura saudável rotulada como podre (mesma foto de freshCarrot (432)/(534))
+Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (251).jpg,cenoura saudável rotulada como podre (mesma foto de freshCarrot (432)/(534))
+Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (527).jpg,cenoura saudável rotulada como podre (cópia exata de freshCarrot (536))
+Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (549).jpg,cenoura saudável rotulada como podre (mesma foto de freshCarrot (432)/(534))
+Fruit And Vegetable Diseases Dataset/Carrot__Rotten/rottenCarrot (65).jpg,foto com vários vegetais (cenoura + pepino + repolho); repetida em Bellpepper__Rotten
+Fruit And Vegetable Diseases Dataset/Bellpepper__Rotten/rottenPepper (488).jpg,foto sem pimentão (cenoura + pepino + repolho); repetida em Carrot__Rotten

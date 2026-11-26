@@ -13,4 +13,5 @@ TEST_SIZE = 0.15
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 SPLITS_PATH = DATA_DIR / "splits.csv"  # versionado no git: todos usam a mesma divisão
+EXCLUDED_PATH = DATA_DIR / "excluidas.csv"  # imagens com rótulo errado, fora de todos os splits
 CACHE_DIR = DATA_DIR / "cache"         # ignorado no git: imagens pré-processadas
