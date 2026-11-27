@@ -221,3 +221,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Cache das imagens pré-processadas (data/splits.csv é versionado)
+data/cache/
+augmentation_preview.png
+duplicates_preview*.png
+duplicates_entre_classes.png
