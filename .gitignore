@@ -227,3 +227,6 @@ data/cache/
 augmentation_preview.png
 duplicates_preview*.png
 duplicates_entre_classes.png
+
+# Resultados da busca de hiperparâmetros (src/tuning.py)
+tuning/

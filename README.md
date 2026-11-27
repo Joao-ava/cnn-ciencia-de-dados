@@ -170,6 +170,59 @@ em `Carrot__Healthy` e `Carrot__Rotten` (erro de rótulo do dataset; não altera
 - O cache ocupa ~4,4 GB. Em máquina com muitos núcleos o ganho é pequeno (uma passada pelo treino
   já leva ~6 s sem cache num PC de 16 núcleos); se faltar espaço, use `cache=None`.
 
+## Construção do modelo e busca de hiperparâmetros (`src/model.py`, `src/tuning.py`)
+
+A arquitetura é uma CNN do zero: blocos de `Conv2D` (+ `BatchNormalization` opcional) terminando
+em `MaxPooling2D`, seguidos por `GlobalAveragePooling2D` e camadas densas até a saída (`softmax`,
+28 classes). Espera imagens já normalizadas (`load_preprocessed_datasets`, normalização `"0_1"`).
+
+```python
+from src.model import build_model
+
+model = build_model(num_classes=28)   # valores default
+model.summary()
+```
+
+### Hiperparâmetros buscados
+
+`src/model.py` define o espaço de busca (`HYPERPARAMETER_SPACE`) e `make_build_model` gera a função
+que o **Keras Tuner** espera (`build_model(hp)`):
+
+| Hiperparâmetro | Espaço | O que controla |
+|---|---|---|
+| `conv_blocks` | 2 a 5 | nº de blocos convolucionais |
+| `filters_inicial` | 16 / 32 / 64 | filtros do 1º bloco |
+| `filters_growth` | 1 ou 2 | se os filtros dobram a cada bloco |
+| `kernel_size` | 3 ou 5 | tamanho do kernel das convoluções |
+| `conv_por_bloco` | 1 ou 2 | nº de `Conv2D` em sequência antes do pooling |
+| `batchnorm` | ligado/desligado | `BatchNormalization` após cada `Conv2D` |
+| `dropout_conv` | 0,0 a 0,3 | dropout após o pooling de cada bloco |
+| `dense_units` | 128 / 256 / 512 | neurônios da camada densa final |
+| `dropout_dense` | 0,2 a 0,5 | dropout antes da saída |
+| `learning_rate` | 1e-4 a 1e-2 (log) | taxa de aprendizado |
+| `optimizer` | adam / rmsprop | otimizador |
+
+### Rodando a busca
+
+```python
+from src.tuning import run_search
+
+tuner, best_hp, best_model = run_search(max_epochs=15, max_trials=20)
+```
+
+```bash
+python -m src.tuning
+```
+
+- Usa o algoritmo **Hyperband** (`keras_tuner.Hyperband`): elimina trials ruins cedo, então custa
+  bem menos do que treinar `max_trials` modelos completos.
+- Objetivo: `val_accuracy`. Usa `class_weight` (de `compute_class_weights`) para compensar o
+  desbalanceamento das classes também durante a busca. A avaliação final do melhor modelo deve
+  olhar **F1 macro** e métricas por classe, não só a acurácia (ver seção de desbalanceamento acima).
+- `EarlyStopping` (monitorando `val_loss`) encerra um trial antes de `max_epochs` se ele parar de melhorar.
+- Resultados intermediários ficam em `tuning/` (fora do git); `run_search(overwrite=True)` descarta
+  uma busca anterior com o mesmo nome e começa do zero.
+
 ## Testar o carregamento
 
 ```bash

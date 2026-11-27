@@ -15,3 +15,4 @@ DATA_DIR = PROJECT_ROOT / "data"
 SPLITS_PATH = DATA_DIR / "splits.csv"  # versionado no git: todos usam a mesma divisão
 EXCLUDED_PATH = DATA_DIR / "excluidas.csv"  # imagens com rótulo errado, fora de todos os splits
 CACHE_DIR = DATA_DIR / "cache"         # ignorado no git: imagens pré-processadas
+TUNING_DIR = PROJECT_ROOT / "tuning"   # ignorado no git: resultados da busca de hiperparâmetros

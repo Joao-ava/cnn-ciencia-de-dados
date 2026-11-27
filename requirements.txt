@@ -2,3 +2,5 @@ kagglehub==1.0.3
 tensorflow==2.21.0
 numpy==2.5.5
 matplotlib==3.11.2
+keras-tuner==1.4.7
+tensorboard==2.21.0  # dependência do keras_tuner (não vem com tensorflow nem com keras_tuner)
