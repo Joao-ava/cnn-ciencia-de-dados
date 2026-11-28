@@ -230,3 +230,7 @@ duplicates_entre_classes.png
 
 # Resultados da busca de hiperparâmetros (src/tuning.py)
 tuning/
+
+# Checkpoints e métricas do treino final (src/callbacks.py, src/metrics.py)
+models/
+results/

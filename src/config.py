@@ -13,6 +13,16 @@ TEST_SIZE = 0.15
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 SPLITS_PATH = DATA_DIR / "splits.csv"  # versionado no git: todos usam a mesma divisão
-EXCLUDED_PATH = DATA_DIR / "excluidas.csv"  # imagens com rótulo errado, fora de todos os splits
-CACHE_DIR = DATA_DIR / "cache"         # ignorado no git: imagens pré-processadas
-TUNING_DIR = PROJECT_ROOT / "tuning"   # ignorado no git: resultados da busca de hiperparâmetros
+EXCLUDED_PATH = (
+    DATA_DIR / "excluidas.csv"
+)  # imagens com rótulo errado, fora de todos os splits
+CACHE_DIR = DATA_DIR / "cache"  # ignorado no git: imagens pré-processadas
+TUNING_DIR = (
+    PROJECT_ROOT / "tuning"
+)  # ignorado no git: resultados da busca de hiperparâmetros
+MODELS_DIR = (
+    PROJECT_ROOT / "models"
+)  # ignorado no git: checkpoints do treino final (src/callbacks.py)
+RESULTS_DIR = (
+    PROJECT_ROOT / "results"
+)  # ignorado no git: histórico, métricas e gráficos (src/metrics.py)
